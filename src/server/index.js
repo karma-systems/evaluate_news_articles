@@ -1,38 +1,41 @@
-// TODO: Configure the environment variables
+var path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const fetch = require('node-fetch');
 
 const mockAPIResponse = require('./mockAPI.js')
-
 const PORT = 8081
 
-// TODO add Configuration to be able to use env variables
+const dotenv = require('dotenv');
+const { response } = require('express');
+dotenv.config()
 
+const app = express()
+app.use(cors())
 
-// TODO: Create an instance for the server
-// TODO: Configure cors to avoid cors-origin issue
-// TODO: Configure express to use body-parser as middle-ware.
-// TODO: Configure express static directory.
+/* Middleware*/
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(express.static('dist'))
+console.log(__dirname)
+
 
 app.get('/', function (req, res) {
     // res.sendFile('dist/index.html')
     res.sendFile(path.resolve('src/client/views/index.html'))
 })
-// a route that handling post request for new URL that coming from the frontend
-/* TODO:
-    1. GET the url from the request body
-    2. Build the URL it should be something like `${BASE_API_URL}?key=${MEAN_CLOUD_API_KEY}&url=${req.body.url}&lang=en`
-    3. Fetch Data from API
-    4. Send it to the client
-    5. REMOVE THIS TODO AFTER DOING IT 😎😎
-    server sends only specified data to the client with below codes
-     const sample = {
-       text: '',
-       score_tag : '',
-       agreement : '',
-       subjectivity : '',
-       confidence : '',
-       irony : ''
-     }
-*/
+
+app.post('/results', async (req, res) => {
+    const response = await fetch('')
+    try {
+        const apiData = await response.json();
+        res.send(apiData);
+    } catch (error) {
+        console.log("Comunication error", error);
+    }
+});
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
@@ -41,7 +44,7 @@ app.get('/test', function (req, res) {
 // designates what port the app will listen to for incoming requests
 app.listen(PORT, (error) => {
     if (error) throw new Error(error)
-    console.log(`Server listening on port ${PORT}!`)
+    console.log(`Server listening at port ${PORT}!`)
 })
 
-// TODO: export app to use it in the unit testing
+module.express = app;
