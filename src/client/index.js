@@ -1,14 +1,17 @@
+import { urlChecker } from './js/checkURL'
+import { handleSubmit } from './js/handleSubmit'
 
-// TODO include your scss file here
+// sass files
+import './styles/resets.scss'
+import './styles/base.scss'
+import './styles/footer.scss'
+import './styles/form.scss'
+import './styles/header.scss'
 
-// TODO: get the button for submit
-// TODO: add event listener to it when the click to call handleSubmit function
-/**
- * TODO
- *  - Get Value of the input for URL
- *  - Check if it's URL or not
- *      yes
- *          send it to the backend
- *      no
- *          show user message it's not valid URL
- */
+const button = document.querySelector(".btn-submit");
+button.addEventListener("click", handleSubmit);
+
+export {
+    urlChecker,
+    handleSubmit
+}

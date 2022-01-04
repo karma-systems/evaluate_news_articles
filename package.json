@@ -9,7 +9,7 @@
     "build-dev": "webpack-dev-server  --config webpack.dev.js"
   },
   "keywords": [],
-  "author": "PUT_YOUR_NAME_HERE",
+  "author": "ASHRAF KAMEL",
   "description": "PUT_SMALL_DESCRIPTION_HERE",
   "dependencies": {
     "node-fetch": "^2.6.1",

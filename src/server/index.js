@@ -7,9 +7,10 @@ const fetch = require('node-fetch');
 const mockAPIResponse = require('./mockAPI.js')
 const PORT = 8081
 
-const dotenv = require('dotenv');
-const { response } = require('express');
+const dotenv = require('dotenv')
 dotenv.config()
+
+const { response } = require('express')
 
 const app = express()
 app.use(cors())
@@ -23,12 +24,17 @@ console.log(__dirname)
 
 
 app.get('/', function (req, res) {
-    // res.sendFile('dist/index.html')
+    //res.sendFile('dist/index.html')
     res.sendFile(path.resolve('src/client/views/index.html'))
 })
+// API
+const baseURL = 'https://api.meaningcloud.com/sentiment-2.1?'
+const apiKey = process.env.API_KEY
+console.log(`Your API Key is ${process.env.API_KEY}`);
 
 app.post('/results', async (req, res) => {
-    const response = await fetch('')
+    const apiURL = `${baseURL}key=${apiKey}&url=${userInput}&lang=en`
+    const response = await fetch(apiURL)
     try {
         const apiData = await response.json();
         res.send(apiData);

@@ -7,12 +7,15 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
-    entry: './src/client/index.js',
-    mode: 'production',
+    entry: './src/client/index.js',  
+    optimization: {
+        minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    }, 
     output: {
         libraryTarget: 'var',
-        library: 'Client'
+        library: 'Client',
     },
+    mode: 'production',
     module: {
         rules: [
             {
@@ -23,15 +26,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-            },
-            // Reference (https://webpack.js.org/loaders/file-loader/)
-            {
-                test: /\.(png|jpe?g|gif)$/i,
-                loader: 'file-loader',
-                options: {
-                    name: '[path][name].[ext]',
-                }
-            }
+            },         
         ]
     },
     plugins: [
@@ -42,7 +37,5 @@ module.exports = {
         new MiniCssExtractPlugin({ filename: "[name].css" }),
         new WorkboxPlugin.GenerateSW()
     ],
-    optimization: {
-        minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
-    }
+   
 }
